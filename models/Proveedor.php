@@ -7,9 +7,9 @@ class Proveedor {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    // Obtener todos los proveedores activos
+    // Obtener todos los proveedores
     public function getAll() {
-        $stmt = $this->db->prepare("SELECT * FROM proveedor WHERE estado = 'activo' ORDER BY nombre ASC");
+        $stmt = $this->db->prepare("SELECT * FROM proveedor ORDER BY nombre ASC");
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -53,9 +53,9 @@ class Proveedor {
         ]);
     }
 
-    // Eliminar proveedor (cambiar estado a inactivo)
-    public function delete($id) {
-        $stmt = $this->db->prepare("UPDATE proveedor SET estado = 'inactivo' WHERE id_proveedor = ?");
+    // Cambiar estado de proveedor (Activar/Desactivar)
+    public function cambiarEstado($id) {
+        $stmt = $this->db->prepare("UPDATE proveedor SET estado = IF(estado = 'activo', 'inactivo', 'activo') WHERE id_proveedor = ?");
         return $stmt->execute([$id]);
     }
 }

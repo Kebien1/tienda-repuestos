@@ -30,7 +30,7 @@ $router->get('clientes/crear', 'ClienteController@crear');
 $router->post('clientes/guardar', 'ClienteController@guardar');
 $router->get('clientes/editar/{id}', 'ClienteController@editar');
 $router->post('clientes/actualizar/{id}', 'ClienteController@actualizar');
-$router->get('clientes/eliminar/{id}', 'ClienteController@eliminar');
+$router->get('clientes/estado/{id}', 'ClienteController@cambiarEstado');
 
 // Definir rutas para Proveedores
 $router->get('proveedores', 'ProveedorController@index');
@@ -38,7 +38,7 @@ $router->get('proveedores/crear', 'ProveedorController@crear');
 $router->post('proveedores/guardar', 'ProveedorController@guardar');
 $router->get('proveedores/editar/{id}', 'ProveedorController@editar');
 $router->post('proveedores/actualizar/{id}', 'ProveedorController@actualizar');
-$router->get('proveedores/eliminar/{id}', 'ProveedorController@eliminar');
+$router->get('proveedores/estado/{id}', 'ProveedorController@cambiarEstado');
 
 // Definir rutas para Órdenes de Compra
 $router->get('ordenes', 'OrdenCompraController@index');

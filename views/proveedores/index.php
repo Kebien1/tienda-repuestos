@@ -25,13 +25,14 @@
                     <th>Teléfono</th>
                     <th>Correo</th>
                     <th>Dirección</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($proveedores)): ?>
                     <tr>
-                        <td colspan="6" style="text-align: center; color: var(--text-secondary);">No hay proveedores registrados en el sistema.</td>
+                        <td colspan="7" style="text-align: center; color: var(--text-secondary);">No hay proveedores registrados en el sistema.</td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($proveedores as $proveedor): ?>
@@ -42,9 +43,14 @@
                             <td><?= htmlspecialchars($proveedor['correo'] ?? 'N/A') ?></td>
                             <td><?= htmlspecialchars($proveedor['direccion'] ?? 'N/A') ?></td>
                             <td>
+                                <span class="badge <?= $proveedor['estado'] === 'activo' ? 'badge-completed' : 'badge-cancelled' ?>">
+                                    <?= ucfirst($proveedor['estado']) ?>
+                                </span>
+                            </td>
+                            <td>
                                 <div class="actions">
                                     <a href="<?= BASE_URL ?>proveedores/editar/<?= $proveedor['id_proveedor'] ?>" class="btn btn-secondary btn-sm">Editar</a>
-                                    <a href="<?= BASE_URL ?>proveedores/eliminar/<?= $proveedor['id_proveedor'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este proveedor?')">Eliminar</a>
+                                    <a href="<?= BASE_URL ?>proveedores/estado/<?= $proveedor['id_proveedor'] ?>" class="btn <?= $proveedor['estado'] === 'activo' ? 'btn-danger' : 'btn-success' ?> btn-sm" onclick="return confirm('¿Estás seguro de cambiar el estado de este proveedor?')"><?= $proveedor['estado'] === 'activo' ? 'Desactivar' : 'Activar' ?></a>
                                 </div>
                             </td>
                         </tr>

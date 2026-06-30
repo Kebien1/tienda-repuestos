@@ -73,4 +73,10 @@ class Usuario {
         $stmt = $this->db->prepare("DELETE FROM usuario WHERE id_usuario = ?");
         return $stmt->execute([$id]);
     }
+
+    // Cambiar estado de usuario (Activar/Desactivar)
+    public function cambiarEstado($id) {
+        $stmt = $this->db->prepare("UPDATE usuario SET estado = IF(estado = 'activo', 'inactivo', 'activo') WHERE id_usuario = ?");
+        return $stmt->execute([$id]);
+    }
 }

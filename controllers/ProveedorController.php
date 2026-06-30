@@ -38,7 +38,7 @@ class ProveedorController
 
         if (empty($nombre) || empty($contacto) || empty($telefono) || empty($direccion)) {
             $_SESSION['error'] = "Todos los campos obligatorios son requeridos.";
-            header("Location: /proveedores/crear");
+            header("Location: " . BASE_URL . "proveedores/crear");
             exit;
         }
 
@@ -52,10 +52,10 @@ class ProveedorController
 
         if ($result) {
             $_SESSION['success'] = "Proveedor registrado correctamente.";
-            header("Location: /proveedores");
+            header("Location: " . BASE_URL . "proveedores");
         } else {
             $_SESSION['error'] = "Error al registrar el proveedor.";
-            header("Location: /proveedores/crear");
+            header("Location: " . BASE_URL . "proveedores/crear");
         }
         exit;
     }
@@ -66,7 +66,7 @@ class ProveedorController
         $proveedor = $this->proveedorModel->find($id);
         if (!$proveedor) {
             $_SESSION['error'] = "Proveedor no encontrado.";
-            header("Location: /proveedores");
+            header("Location: " . BASE_URL . "proveedores");
             exit;
         }
 
@@ -81,7 +81,7 @@ class ProveedorController
         $proveedor = $this->proveedorModel->find($id);
         if (!$proveedor) {
             $_SESSION['error'] = "Proveedor no encontrado.";
-            header("Location: /proveedores");
+            header("Location: " . BASE_URL . "proveedores");
             exit;
         }
 
@@ -93,7 +93,7 @@ class ProveedorController
 
         if (empty($nombre) || empty($contacto) || empty($telefono) || empty($direccion)) {
             $_SESSION['error'] = "Todos los campos obligatorios son requeridos.";
-            header("Location: /proveedores/editar/" . $id);
+            header("Location: " . BASE_URL . "proveedores/editar/" . $id);
             exit;
         }
 
@@ -107,30 +107,31 @@ class ProveedorController
 
         if ($result) {
             $_SESSION['success'] = "Proveedor actualizado correctamente.";
-            header("Location: /proveedores");
+            header("Location: " . BASE_URL . "proveedores");
         } else {
             $_SESSION['error'] = "Error al actualizar el proveedor.";
-            header("Location: /proveedores/editar/" . $id);
+            header("Location: " . BASE_URL . "proveedores/editar/" . $id);
         }
         exit;
     }
 
-    // Eliminar proveedor (eliminación lógica)
-    public function eliminar($id)
+    // Cambiar estado del proveedor (activar/desactivar)
+    public function cambiarEstado($id)
     {
         $proveedor = $this->proveedorModel->find($id);
         if (!$proveedor) {
             $_SESSION['error'] = "Proveedor no encontrado.";
-            header("Location: /proveedores");
+            header("Location: " . BASE_URL . "proveedores");
             exit;
         }
 
-        if ($this->proveedorModel->delete($id)) {
-            $_SESSION['success'] = "Proveedor eliminado correctamente.";
+        if ($this->proveedorModel->cambiarEstado($id)) {
+            $nuevoEstado = $proveedor['estado'] === 'activo' ? 'desactivado' : 'activado';
+            $_SESSION['success'] = "Proveedor $nuevoEstado correctamente.";
         } else {
-            $_SESSION['error'] = "No se pudo eliminar el proveedor.";
+            $_SESSION['error'] = "No se pudo cambiar el estado del proveedor.";
         }
-        header("Location: /proveedores");
+        header("Location: " . BASE_URL . "proveedores");
         exit;
     }
 }
