@@ -48,6 +48,25 @@ $router->post('ordenes/guardar', 'OrdenCompraController@guardar');
 $router->get('ordenes/ver/{id}', 'OrdenCompraController@ver');
 $router->post('ordenes/estado/{id}', 'OrdenCompraController@actualizarEstado');
 
+// Definir rutas para Productos (Catálogo)
+$router->get('productos', 'ProductoController@index');
+$router->get('productos/crear', 'ProductoController@crear');
+$router->post('productos/guardar', 'ProductoController@guardar');
+$router->get('productos/editar/{id}', 'ProductoController@editar');
+$router->post('productos/actualizar/{id}', 'ProductoController@actualizar');
+$router->get('productos/estado/{id}', 'ProductoController@cambiarEstado');
+
+// Definir rutas para Inventario y Alertas
+$router->get('inventario', 'InventarioController@index');
+$router->post('inventario/actualizar', 'InventarioController@actualizar');
+
+// Definir rutas para Búsqueda por Compatibilidad Vehicular
+$router->get('busqueda', 'BusquedaController@index');
+$router->get('ajax/marcas', 'BusquedaController@ajaxMarcas');
+$router->get('ajax/modelos', 'BusquedaController@ajaxModelos');
+
+
+
 // Página de inicio (redirige a proveedores por defecto o muestra un panel de control)
 $router->get('', 'ProveedorController@index');
 
