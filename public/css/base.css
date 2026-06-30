@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Paleta de colores minimalista y elegante (Light Theme) */
+    --bg-body: #f9fafb;
+    --bg-panel: #ffffff;
+    --border-color: #e5e7eb;
+    
+    /* Texto */
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    
+    /* Acentos (Sofisticados, no saturados) */
+    --accent-primary: #4f46e5; /* Indigo suave */
+    --accent-primary-hover: #4338ca;
+    
+    --accent-success-bg: #ecfdf5;
+    --accent-success-text: #059669;
+    
+    --accent-warning-bg: #fffbeb;
+    --accent-warning-text: #d97706;
+    
+    --accent-danger-bg: #fef2f2;
+    --accent-danger-text: #dc2626;
+
+    /* Sombras suaves */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    
+    --transition: all 0.2s ease-in-out;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-primary-hover);
+}
