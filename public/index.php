@@ -31,6 +31,7 @@ $router->post('clientes/guardar', 'ClienteController@guardar');
 $router->get('clientes/editar/{id}', 'ClienteController@editar');
 $router->post('clientes/actualizar/{id}', 'ClienteController@actualizar');
 $router->get('clientes/estado/{id}', 'ClienteController@cambiarEstado');
+$router->get('clientes/ver/{id}', 'ClienteController@ver');
 
 // Definir rutas para Proveedores
 $router->get('proveedores', 'ProveedorController@index');

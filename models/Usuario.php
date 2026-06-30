@@ -1,35 +1,41 @@
 <?php
 
-class Usuario {
+class Usuario
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
     }
 
     // Obtener todos los clientes (id_rol = 5 es 'cliente')
-    public function getAllClientes() {
+    public function getAllClientes()
+    {
         $stmt = $this->db->prepare("SELECT * FROM usuario WHERE id_rol = 5 ORDER BY fecha_registro DESC");
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     // Buscar usuario por id
-    public function find($id) {
+    public function find($id)
+    {
         $stmt = $this->db->prepare("SELECT * FROM usuario WHERE id_usuario = ?");
         $stmt->execute([$id]);
         return $stmt->fetch();
     }
 
     // Buscar usuario por correo electrónico (para validación de correo único)
-    public function findByEmail($correo) {
+    public function findByEmail($correo)
+    {
         $stmt = $this->db->prepare("SELECT * FROM usuario WHERE correo = ?");
         $stmt->execute([$correo]);
         return $stmt->fetch();
     }
 
     // Crear nuevo usuario (cliente)
-    public function create($data) {
+    public function create($data)
+    {
         $contrasenaHash = hash('sha256', $data['contrasena']);
 
         $stmt = $this->db->prepare("INSERT INTO usuario (nombre, correo, contrasena, telefono, direccion, id_rol, estado) VALUES (?, ?, ?, ?, ?, ?, 'activo')");
@@ -44,7 +50,8 @@ class Usuario {
     }
 
     // Actualizar usuario
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         if (!empty($data['contrasena'])) {
             $contrasenaHash = hash('sha256', $data['contrasena']);
             $stmt = $this->db->prepare("UPDATE usuario SET nombre = ?, correo = ?, contrasena = ?, telefono = ?, direccion = ? WHERE id_usuario = ?");
@@ -69,14 +76,32 @@ class Usuario {
     }
 
     // Eliminar usuario
-    public function delete($id) {
+    public function delete($id)
+    {
         $stmt = $this->db->prepare("DELETE FROM usuario WHERE id_usuario = ?");
         return $stmt->execute([$id]);
     }
 
     // Cambiar estado de usuario (Activar/Desactivar)
-    public function cambiarEstado($id) {
+    public function cambiarEstado($id)
+    {
         $stmt = $this->db->prepare("UPDATE usuario SET estado = IF(estado = 'activo', 'inactivo', 'activo') WHERE id_usuario = ?");
         return $stmt->execute([$id]);
+    }
+
+
+    // Obtener historial de compras de un cliente específico
+    public function getHistorialCompras($id_cliente)
+    {
+        $stmt = $this->db->prepare("
+            SELECT v.id_venta, v.fecha, v.total, v.estado,
+                   u_emp.nombre AS vendedor_nombre
+            FROM venta v
+            LEFT JOIN usuario u_emp ON v.id_empleado = u_emp.id_usuario
+            WHERE v.id_cliente = ?
+            ORDER BY v.fecha DESC
+        ");
+        $stmt->execute([$id_cliente]);
+        return $stmt->fetchAll();
     }
 }

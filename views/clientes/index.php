@@ -49,6 +49,7 @@
                             </td>
                             <td>
                                 <div class="actions">
+                                    <a href="<?= BASE_URL ?>clientes/ver/<?= $cliente['id_usuario'] ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
                                     <a href="<?= BASE_URL ?>clientes/editar/<?= $cliente['id_usuario'] ?>" class="btn btn-secondary btn-sm">Editar</a>
                                     <a href="<?= BASE_URL ?>clientes/estado/<?= $cliente['id_usuario'] ?>" class="btn <?= $cliente['estado'] === 'activo' ? 'btn-danger' : 'btn-success' ?> btn-sm" onclick="return confirm('¿Estás seguro de cambiar el estado de este cliente?')"><?= $cliente['estado'] === 'activo' ? 'Desactivar' : 'Activar' ?></a>
                                 </div>

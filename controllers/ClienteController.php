@@ -1,14 +1,17 @@
 <?php
 
-class ClienteController {
+class ClienteController
+{
     private $usuarioModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->usuarioModel = new Usuario();
     }
 
     // Listado de clientes
-    public function index() {
+    public function index()
+    {
         $clientes = $this->usuarioModel->getAllClientes();
 
         require_once __DIR__ . '/../views/layout/header.php';
@@ -17,14 +20,16 @@ class ClienteController {
     }
 
     // Mostrar formulario de creación
-    public function crear() {
+    public function crear()
+    {
         require_once __DIR__ . '/../views/layout/header.php';
         require_once __DIR__ . '/../views/clientes/crear.php';
         require_once __DIR__ . '/../views/layout/footer.php';
     }
 
     // Registrar nuevo cliente con validación de correo único
-    public function guardar() {
+    public function guardar()
+    {
         $nombre = trim($_POST['nombre'] ?? '');
         $correo = trim($_POST['correo'] ?? '');
         $contrasena = $_POST['contrasena'] ?? '';
@@ -66,7 +71,8 @@ class ClienteController {
     }
 
     // Mostrar formulario de edición
-    public function editar($id) {
+    public function editar($id)
+    {
         $cliente = $this->usuarioModel->find($id);
         if (!$cliente || (int)$cliente['id_rol'] !== 5) {
             $_SESSION['error'] = "Cliente no encontrado.";
@@ -80,7 +86,8 @@ class ClienteController {
     }
 
     // Actualizar cliente
-    public function actualizar($id) {
+    public function actualizar($id)
+    {
         $cliente = $this->usuarioModel->find($id);
         if (!$cliente || (int)$cliente['id_rol'] !== 5) {
             $_SESSION['error'] = "Cliente no encontrado.";
@@ -127,7 +134,8 @@ class ClienteController {
     }
 
     // Cambiar estado del cliente (activar/desactivar)
-    public function cambiarEstado($id) {
+    public function cambiarEstado($id)
+    {
         $cliente = $this->usuarioModel->find($id);
         if (!$cliente || (int)$cliente['id_rol'] !== 5) {
             $_SESSION['error'] = "Cliente no encontrado.";
@@ -143,5 +151,23 @@ class ClienteController {
         }
         header("Location: " . BASE_URL . "clientes");
         exit;
+    }
+
+    // Ver detalles del cliente y su historial
+    public function ver($id)
+    {
+        $cliente = $this->usuarioModel->find($id);
+        if (!$cliente || (int)$cliente['id_rol'] !== 5) {
+            $_SESSION['error'] = "Cliente no encontrado.";
+            header("Location: " . BASE_URL . "clientes");
+            exit;
+        }
+
+        // Usamos el nuevo método del modelo para obtener las ventas
+        $historial = $this->usuarioModel->getHistorialCompras($id);
+
+        require_once __DIR__ . '/../views/layout/header.php';
+        require_once __DIR__ . '/../views/clientes/ver.php';
+        require_once __DIR__ . '/../views/layout/footer.php';
     }
 }
