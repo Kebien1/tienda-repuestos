@@ -60,6 +60,18 @@ $router->get('productos/estado/{id}', 'ProductoController@cambiarEstado');
 $router->get('inventario', 'InventarioController@index');
 $router->post('inventario/actualizar', 'InventarioController@actualizar');
 
+// Definir rutas para Ventas
+$router->get('ventas', 'VentaController@index');
+$router->get('ventas/crear', 'VentaController@crear');
+$router->post('ventas/guardar', 'VentaController@guardar');
+$router->get('ventas/ver/{id}', 'VentaController@ver');
+$router->get('ventas/anular/{id}', 'VentaController@anular');
+
+// Definir rutas para Reportes
+$router->get('reportes', 'ReporteController@index'); // Resumen General
+$router->get('reportes/productos', 'ReporteController@productosVendidos');
+$router->get('reportes/fechas', 'ReporteController@ventasPorFecha');
+
 // Definir rutas para Búsqueda por Compatibilidad Vehicular
 $router->get('busqueda', 'BusquedaController@index');
 $router->get('ajax/marcas', 'BusquedaController@ajaxMarcas');

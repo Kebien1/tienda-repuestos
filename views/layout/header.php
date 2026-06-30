@@ -35,6 +35,8 @@
                     <li><a href="<?= BASE_URL ?>inventario" class="<?= $is_inventario ? 'active' : '' ?>"> Inventario</a></li>
                     <li><a href="<?= BASE_URL ?>busqueda" class="<?= $is_busqueda ? 'active' : '' ?>"> Búsqueda</a></li>
                     <li><a href="<?= BASE_URL ?>vehiculos" class="<?= $is_vehiculos ? 'active' : '' ?>"> Vehículos</a></li>
+                    <li><a href="<?= BASE_URL ?>ventas"> Ventas</a></li>
+                    <li><a href="<?= BASE_URL ?>reportes"> Reportes</a></li>
                 </ul>
             </nav>
         </aside>
