@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $producto Datos del producto a editar
  * @var array $categorias Categorías disponibles
@@ -16,100 +17,103 @@ if (!empty($ids_actuales)) {
     $vehiculos_actuales = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
-<div class="container">
-    <h2>Editar Producto: <?= htmlspecialchars($producto['nombre']) ?></h2>
-    <div class="card" style="padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 5px;">
-        <form action="<?= BASE_URL ?>productos/actualizar/<?= $producto['id_producto'] ?>" method="POST" enctype="multipart/form-data">
+<div class="panel">
+    <div class="panel-header">
+        <h2>Editar Producto: <?= htmlspecialchars($producto['nombre']) ?></h2>
+    </div>
 
-            <div style="display: flex; gap: 20px; margin-bottom: 15px;">
-                <div style="flex: 1;">
-                    <label>Nombre del Producto *</label><br>
-                    <input type="text" name="nombre" value="<?= htmlspecialchars($producto['nombre']) ?>" required style="width: 100%; padding: 8px;">
-                </div>
-                <div style="flex: 1;">
-                    <label>Precio (Bs.) *</label><br>
-                    <input type="number" step="0.01" name="precio" value="<?= $producto['precio'] ?>" required style="width: 100%; padding: 8px;">
-                </div>
+    <form action="<?= BASE_URL ?>productos/actualizar/<?= $producto['id_producto'] ?>" method="POST" enctype="multipart/form-data">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Nombre del Producto *</label>
+                <input type="text" name="nombre" value="<?= htmlspecialchars($producto['nombre']) ?>" required class="form-control">
             </div>
-
-            <div style="display: flex; gap: 20px; margin-bottom: 15px;">
-                <div style="flex: 1;">
-                    <label>Marca del Repuesto *</label><br>
-                    <select name="id_marca_producto" required style="width: 100%; padding: 8px;">
-                        <option value="">Seleccione...</option>
-                        <?php foreach ($marcas_producto as $m): ?>
-                            <option value="<?= $m['id_marca_producto'] ?>" <?= $m['id_marca_producto'] == $producto['id_marca_producto'] ? 'selected' : '' ?>><?= $m['nombre'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div style="flex: 1;">
-                    <label>Categoría *</label><br>
-                    <select name="id_categoria" required style="width: 100%; padding: 8px;">
-                        <option value="">Seleccione...</option>
-                        <?php foreach ($categorias as $c): ?>
-                            <option value="<?= $c['id_categoria'] ?>" <?= $c['id_categoria'] == $producto['id_categoria'] ? 'selected' : '' ?>><?= $c['nombre'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Precio (Bs.) *</label>
+                <input type="number" step="0.01" name="precio" value="<?= $producto['precio'] ?>" required class="form-control">
             </div>
+        </div>
 
-            <div style="display: flex; gap: 20px; margin-bottom: 15px;">
-                <div style="flex: 1;">
-                    <label>Stock Actual *</label><br>
-                    <input type="number" name="stock" value="<?= $producto['stock'] ?>" required style="width: 100%; padding: 8px;">
-                </div>
-                <div style="flex: 1;">
-                    <label>Actualizar Imagen (Opcional)</label><br>
-                    <input type="file" name="imagen" accept="image/*" style="width: 100%; padding: 8px;">
-                    <?php if ($producto['imagen']): ?>
-                        <small>Imagen actual: <?= $producto['imagen'] ?></small>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <label>Descripción</label><br>
-                <textarea name="descripcion" rows="3" style="width: 100%; padding: 8px;"><?= htmlspecialchars($producto['descripcion']) ?></textarea>
-            </div>
-
-            <hr style="margin: 20px 0;">
-            <h3>Compatibilidad Vehicular</h3>
-            <p style="font-size: 12px; color: #666;">Añade o quita vehículos compatibles con este repuesto.</p>
-
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <select id="tipo_vehiculo" style="padding: 8px;">
-                    <option value="">1. Tipo...</option>
-                    <?php foreach ($tipos_vehiculo as $t): ?>
-                        <option value="<?= $t['id_tipo_vehiculo'] ?>"><?= $t['nombre'] ?></option>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Marca del Repuesto *</label>
+                <select name="id_marca_producto" required class="form-control">
+                    <option value="">Seleccione...</option>
+                    <?php foreach ($marcas_producto as $m): ?>
+                        <option value="<?= $m['id_marca_producto'] ?>" <?= $m['id_marca_producto'] == $producto['id_marca_producto'] ? 'selected' : '' ?>><?= $m['nombre'] ?></option>
                     <?php endforeach; ?>
                 </select>
-
-                <select id="marca_vehiculo" style="padding: 8px;">
-                    <option value="">2. Marca...</option>
-                </select>
-
-                <select id="modelo_vehiculo" style="padding: 8px;">
-                    <option value="">3. Modelo...</option>
-                </select>
-
-                <button type="button" onclick="agregarVehiculo()" style="padding: 8px 15px; background: #17a2b8; color: white; border: none; cursor: pointer;">Añadir</button>
             </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Categoría *</label>
+                <select name="id_categoria" required class="form-control">
+                    <option value="">Seleccione...</option>
+                    <?php foreach ($categorias as $c): ?>
+                        <option value="<?= $c['id_categoria'] ?>" <?= $c['id_categoria'] == $producto['id_categoria'] ? 'selected' : '' ?>><?= $c['nombre'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
 
-            <div id="vehiculos_agregados" style="padding: 10px; border: 1px dashed #ccc; min-height: 50px; background: #fafafa; margin-bottom: 20px;">
-                <!-- Vehículos cargados desde la base de datos -->
-                <?php foreach ($vehiculos_actuales as $v): ?>
-                    <div id="vehiculo_<?= $v['id_modelo_vehiculo'] ?>" style="display: inline-block; background: #e2e3e5; color: #383d41; padding: 5px 10px; margin: 5px; border-radius: 15px; font-size: 14px;">
-                        <?= htmlspecialchars($v['nombre']) ?>
-                        <input type="hidden" name="vehiculos[]" value="<?= $v['id_modelo_vehiculo'] ?>">
-                        <button type="button" onclick="this.parentElement.remove()" style="margin-left: 5px; color: red; border: none; background: none; cursor: pointer; font-weight: bold;">X</button>
-                    </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Stock Actual *</label>
+                <input type="number" name="stock" value="<?= $producto['stock'] ?>" required class="form-control">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>Actualizar Imagen (Opcional)</label>
+                <input type="file" name="imagen" accept="image/*" class="form-control">
+                <?php if ($producto['imagen']): ?>
+                    <small style="color: var(--text-secondary); margin-top: 5px; display: block;">Imagen actual: <?= $producto['imagen'] ?></small>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="descripcion" rows="3" class="form-control"><?= htmlspecialchars($producto['descripcion']) ?></textarea>
+        </div>
+
+        <hr style="margin: 25px 0; border-color: var(--border-color);">
+        <h3 style="margin-bottom: 5px;">Compatibilidad Vehicular</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 15px;">Añade o quita vehículos compatibles con este repuesto.</p>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <select id="tipo_vehiculo" class="form-control" style="width: auto;">
+                <option value="">1. Tipo...</option>
+                <?php foreach ($tipos_vehiculo as $t): ?>
+                    <option value="<?= $t['id_tipo_vehiculo'] ?>"><?= $t['nombre'] ?></option>
                 <?php endforeach; ?>
-            </div>
+            </select>
 
-            <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; font-size: 16px;">Actualizar Producto</button>
-            <a href="<?= BASE_URL ?>productos" style="margin-left: 10px; text-decoration: none; color: #555;">Cancelar</a>
-        </form>
-    </div>
+            <select id="marca_vehiculo" class="form-control" style="width: auto;">
+                <option value="">2. Marca...</option>
+            </select>
+
+            <select id="modelo_vehiculo" class="form-control" style="width: auto;">
+                <option value="">3. Modelo...</option>
+            </select>
+
+            <button type="button" onclick="agregarVehiculo()" class="btn btn-secondary">Añadir</button>
+        </div>
+
+        <div id="vehiculos_agregados" style="padding: 15px; border: 1px dashed var(--border-color); min-height: 50px; background: #f9fafb; margin-bottom: 25px; border-radius: 8px;">
+            <!-- Vehículos cargados desde la base de datos -->
+            <?php foreach ($vehiculos_actuales as $v): ?>
+                <div id="vehiculo_<?= $v['id_modelo_vehiculo'] ?>" style="display: inline-flex; align-items: center; gap: 8px; background: #f3f4f6; color: var(--text-primary); padding: 6px 12px; margin: 4px; border-radius: 9999px; font-size: 0.85rem; border: 1px solid var(--border-color);">
+                    <?= htmlspecialchars($v['nombre']) ?>
+                    <input type="hidden" name="vehiculos[]" value="<?= $v['id_modelo_vehiculo'] ?>">
+                    <button type="button" onclick="this.parentElement.remove()" style="color: var(--accent-danger-text); border: none; background: none; cursor: pointer; font-weight: bold; font-size: 1rem; line-height: 1;">×</button>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+            <a href="<?= BASE_URL ?>productos" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
 </div>
 
 <script>
@@ -145,11 +149,11 @@ if (!empty($ids_actuales)) {
         const container = document.getElementById('vehiculos_agregados');
         const div = document.createElement('div');
         div.id = 'vehiculo_' + id;
-        div.style = "display: inline-block; background: #e2e3e5; color: #383d41; padding: 5px 10px; margin: 5px; border-radius: 15px; font-size: 14px;";
+        div.style = "display: inline-flex; align-items: center; gap: 8px; background: #f3f4f6; color: var(--text-primary); padding: 6px 12px; margin: 4px; border-radius: 9999px; font-size: 0.85rem; border: 1px solid var(--border-color);";
         div.innerHTML = `
             ${texto}
             <input type="hidden" name="vehiculos[]" value="${id}">
-            <button type="button" onclick="this.parentElement.remove()" style="margin-left: 5px; color: red; border: none; background: none; cursor: pointer; font-weight: bold;">X</button>
+            <button type="button" onclick="this.parentElement.remove()" style="color: var(--accent-danger-text); border: none; background: none; cursor: pointer; font-weight: bold; font-size: 1rem; line-height: 1;">×</button>
         `;
         container.appendChild(div);
     }

@@ -65,7 +65,14 @@ $router->get('busqueda', 'BusquedaController@index');
 $router->get('ajax/marcas', 'BusquedaController@ajaxMarcas');
 $router->get('ajax/modelos', 'BusquedaController@ajaxModelos');
 
+// Definir rutas para Vehículos (Marcas y Modelos)
+$router->get('vehiculos', 'VehiculoController@marcas');
+$router->post('vehiculos/guardarMarca', 'VehiculoController@guardarMarca');
+$router->get('vehiculos/eliminarMarca/{id}', 'VehiculoController@eliminarMarca');
 
+$router->get('vehiculos/modelos', 'VehiculoController@modelos');
+$router->post('vehiculos/guardarModelo', 'VehiculoController@guardarModelo');
+$router->get('vehiculos/eliminarModelo/{id}', 'VehiculoController@eliminarModelo');
 
 // Página de inicio (redirige a proveedores por defecto o muestra un panel de control)
 $router->get('', 'ProveedorController@index');
