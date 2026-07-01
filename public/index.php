@@ -86,6 +86,25 @@ $router->get('vehiculos/modelos', 'VehiculoController@modelos');
 $router->post('vehiculos/guardarModelo', 'VehiculoController@guardarModelo');
 $router->get('vehiculos/eliminarModelo/{id}', 'VehiculoController@eliminarModelo');
 
+// Rutas para Diagnóstico IA
+$router->get('diagnostico', 'DiagnosticoController@index');
+$router->post('diagnostico/analizar', 'DiagnosticoController@analizar');
+$router->get('diagnostico/historial', 'DiagnosticoController@historial');
+$router->get('diagnostico/resultado/{id}', 'DiagnosticoController@resultado');
+
+// Rutas para Citas
+$router->get('citas', 'CitaController@index');
+$router->get('citas/crear', 'CitaController@crear');
+$router->post('citas/guardar', 'CitaController@guardar');
+$router->get('citas/editar/{id}', 'CitaController@editar');
+$router->post('citas/actualizar/{id}', 'CitaController@actualizar');
+$router->get('citas/eliminar/{id}', 'CitaController@eliminar'); // Cambiado a GET para botón rápido o modal confirm
+
+// Rutas para Reportes y Dashboard
+$router->get('reportes/dashboard', 'ReporteController@dashboard');
+$router->get('reportes/ventas', 'ReporteController@ventas');
+
+
 // Página de inicio (redirige a proveedores por defecto o muestra un panel de control)
 $router->get('', 'ProveedorController@index');
 

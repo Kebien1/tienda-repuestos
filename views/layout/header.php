@@ -36,7 +36,7 @@
                     <li><a href="<?= BASE_URL ?>busqueda" class="<?= $is_busqueda ? 'active' : '' ?>"> Búsqueda</a></li>
                     <li><a href="<?= BASE_URL ?>vehiculos" class="<?= $is_vehiculos ? 'active' : '' ?>"> Vehículos</a></li>
                     <li><a href="<?= BASE_URL ?>ventas"> Ventas</a></li>
-                    <li><a href="<?= BASE_URL ?>reportes"> Reportes</a></li>
+                    <li><a href="<?= BASE_URL ?>reportes/dashboard">Reportes</a></li>
                 </ul>
             </nav>
         </aside>
